@@ -21,6 +21,7 @@ Ensure the following are installed on your Linux system:
 
 ``bash
 git clone https://github.com/Strycho/learner-progress-dashboard.git
+
 cd learner-progress-dashboard
 
 2. Install Dependencies
