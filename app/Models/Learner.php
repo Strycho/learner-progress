@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -21,5 +20,13 @@ class Learner extends Model
     public function enrolments()
     {
         return $this->hasMany(Enrolment::class);
+    }
+
+    
+    public function scopeFilterByCourse($query, $courseName)
+    {
+        return $query->whereHas('enrolments.course', function ($q) use ($courseName) {
+            $q->where('name', $courseName);
+        });
     }
 }

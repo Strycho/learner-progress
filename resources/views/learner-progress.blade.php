@@ -59,33 +59,35 @@
                 fetch(url)
                     .then(res => res.json())
                     .then(data => {
+                        // Use data.data for Laravel Resource collections
+                        let learners = data.data || data;
                         // 🔽 Apply sorting if specified
                         if (sortOrder === 'asc') {
-                            data.sort((a, b) => a.progress - b.progress);
+                            learners.sort((a, b) => a.progress - b.progress);
                         } else if (sortOrder === 'desc') {
-                            data.sort((a, b) => b.progress - a.progress);
+                            learners.sort((a, b) => b.progress - a.progress);
                         }
 
                         let html = `
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Learner</th>
-                            <th>Courses Enrolled</th>
-                            <th>Progress (%)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-            `;
+        <table>
+            <thead>
+                <tr>
+                    <th>Learner</th>
+                    <th>Courses Enrolled</th>
+                    <th>Progress (%)</th>
+                </tr>
+            </thead>
+            <tbody>
+    `;
 
-                        data.forEach(l => {
+                        learners.forEach(l => {
                             html += `
-                    <tr>
-                        <td>${l.name}</td>
-                        <td>${l.courses.join(', ')}</td>
-                        <td>${l.progress}%</td>
-                    </tr>
-                `;
+            <tr>
+                <td>${l.name}</td>
+                <td>${l.courses.join(', ')}</td>
+                <td>${l.progress}%</td>
+            </tr>
+        `;
                         });
 
                         html += '</tbody></table>';
