@@ -11,9 +11,29 @@
 </head>
 <body>
     <h1>Learner Progress Dashboard</h1>
-    <div id="dashboard">
-        <!-- Table will be loaded here via JS -->
-    </div>
+
+<table>
+    <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Courses Enrolled</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach ($learners as $learner)
+            <tr>
+                <td>{{ $learner->firstname }}</td>
+                <td>{{ $learner->lastname }}</td>
+                <td>
+                    @foreach ($learner->enrolments as $enrolment)
+                        {{ $enrolment->course->name }} (Progress: {{ $enrolment->progress }}%)<br>
+                    @endforeach
+                </td>
+            </tr>
+        @endforeach
+    </tbody>
+</table>
 
     <script>
         fetch('/api/learners')

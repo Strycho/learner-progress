@@ -18,4 +18,8 @@ class Learner extends Model
         'firstname',
         'lastname',
     ];
+    public function enrolments()
+    {
+        return $this->hasMany(Enrolment::class);
+    }
 }

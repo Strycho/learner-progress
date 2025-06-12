@@ -7,7 +7,8 @@ use App\Models\Learner;
 
 class LearnerProgressController extends Controller
 {
-    public function index()
+    // Method to return the JSON API data
+    public function apiIndex()
     {
         $learners = Learner::with(['enrolments.course'])->get();
 
@@ -16,12 +17,20 @@ class LearnerProgressController extends Controller
             $progress = $learner->enrolments->avg('progress') ?? 0;
 
             return [
-                'name' => $learner->name,
+                'name' => $learner->firstname . ' ' . $learner->lastname,
                 'courses' => $courses,
                 'progress' => round($progress),
             ];
         });
 
         return response()->json($results);
+    }
+
+    // Method to return the Blade view with learners data for server-side rendering
+    public function index()
+    {
+        $learners = Learner::with(['enrolments.course'])->get();
+
+        return view('learner-progress', compact('learners'));
     }
 }
