@@ -14,12 +14,8 @@ class LearnerProgressController extends Controller
     // Method to return the JSON API data
     public function apiIndex(Request $request)
     {
-
-        Log::info('📥 apiIndex hit');
         $courseFilter = $request->query('course');
 
-        Log::info('Course filter: ' . $courseFilter);
-         
         $query = Learner::with(['enrolments.course']);
 
         if ($courseFilter) {
@@ -29,15 +25,9 @@ class LearnerProgressController extends Controller
         }
 
         $learners = $query->get();
-Log::info('[apiIndex] Learners fetched:', ['count' => $learners->count()]);
         $results = $learners->map(function ($learner) {
             $courses = $learner->enrolments->pluck('course.name')->toArray();
             $progress = $learner->enrolments->avg('progress') ?? 0;
- Log::info('[apiIndex] Processing learner:', [
-            'name' => $learner->firstname . ' ' . $learner->lastname,
-            'courses' => $courses,
-            'progress' => $progress
-        ]);
 
             return [
                 'name' => $learner->firstname . ' ' . $learner->lastname,
