@@ -8,4 +8,4 @@ Route::get('/', function () {
 });
 Route::get('/learner-progress', [LearnerProgressController::class, 'index']);
 
-Route::get('/api/learners', [LearnerProgressController::class, 'apiIndex']);
+Route::get('/learners', [LearnerProgressController::class, 'apiIndex']);
