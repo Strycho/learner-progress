@@ -7,3 +7,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/learner-progress', [LearnerProgressController::class, 'index']);
+
+Route::get('/api/learners', [LearnerProgressController::class, 'apiIndex']);
